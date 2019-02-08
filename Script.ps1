@@ -41,8 +41,8 @@ Function FullScreen ()
 
 
 # Start the app
-app='microsoft-edge'
-value='http://www.hackertyper.com/'
+$app='microsoft-edge'
+value='http://www.hackertyper.com/'   #testing value ##real value: https://www.youtube.com/watch?v=dQw4w9WgXcQ  ###RICK ROLL
 $startString = $app + ":" + $value
 start $startString
 
