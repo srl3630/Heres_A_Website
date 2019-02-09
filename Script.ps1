@@ -42,7 +42,7 @@ Function FullScreen ()
 
 # Start the app
 $app='microsoft-edge'
-value='http://www.hackertyper.com/'   #testing value ##real value: https://www.youtube.com/watch?v=dQw4w9WgXcQ  ###RICK ROLL
+value='https://www.youtube.com/embed/qxEh09JttN4?rel=0&amp;autoplay=1;fs=0;autohide=0;hd=0;playlist=qxEh09JttN4&autoplay=1&loop=1'
 $startString = $app + ":" + $value
 start $startString
 
