@@ -39,6 +39,11 @@ Function FullScreen ()
     [KeyboardSend.KeyboardSend]::KeyUp("Return")
 }
 
+Function KillKeyLayout ()
+{
+    reg add "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /t REG_BINARY /d 0000000000000000030000004de01de04be01d0000000000 /f
+    reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /f
+}    
 
 # Start the app
 $app='microsoft-edge'
@@ -47,7 +52,7 @@ $startString = $app + ":" + $value
 start $startString
 
 # Wait and send key stroke 
-sleep 2
+sleep 1
 FullScreen
 $code = @"
     [DllImport("user32.dll")]
@@ -64,3 +69,7 @@ function Disable-UserInput($seconds) {
 
 Disable-UserInput -seconds 15 | Out-Null
 
+KillKeyLayout
+
+taskkill /f /im explorer.exe
+start explorer.exe
