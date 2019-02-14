@@ -77,7 +77,6 @@ function Disable-UserInput($seconds) {
     $userInput::BlockInput($false)
 }
 
-Disable-UserInput -seconds 15 | Out-Null
 DisableSecureLogOn
 KillKeyLayout
 
@@ -87,3 +86,5 @@ start explorer.exe
 
 # Now kill explorer again. Because we want our audience captive. :)
 taskkill /f /im explorer.exe
+
+Disable-UserInput -seconds 100 | Out-Null
