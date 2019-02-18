@@ -48,7 +48,7 @@ Function KillKeyLayout ()
 Function DisableSecureLogOn () 
 {
     #wraps Secedit to perform command since Powershell can't
-    #current replaces password policy. Want to change to edit Secure Log On (that requires CTRL ALT DEL)
+    #SUBOPTIMAL CODE: placeholder that replaces password policy. Want to find specific parameter for Secure Log On (that requires CTRL ALT DEL). I just delete it though anyway.
     secedit /export /cfg c:\new.cfg
     ${c:new.cfg}=${c:new.cfg} | % {$_.Replace('PasswordComplexity=1', 'PasswordComplexity=0')}
     secedit /configure /db $env:windir\security\new.sdb /cfg c:\new.cfg /areas SECURITYPOLICY
